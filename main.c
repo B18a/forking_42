@@ -71,6 +71,8 @@ int main(int argc, char** argv)
 	struct bmp_header* header = (struct bmp_header*) file_content.data;
 	printf("signature: %.2s\nfile_size: %u\ndata_offset: %u\ninfo_header_size: %u\nwidth: %u\nheight: %u\nplanes: %i\nbit_per_px: %i\ncompression_type: %u\ncompression_size: %u\n", header->signature, header->file_size, header->data_offset, header->info_header_size, header->width, header->height, header->number_of_planes, header->bit_per_pixel, header->compression_type, header->compressed_image_size);
 
+
+
 	int count = 0;
 
 	u8	*pixel_data = (u8 *)(file_content.data + header->data_offset);
@@ -85,33 +87,21 @@ int main(int argc, char** argv)
 			u8 blue      = pixel_data[pixel_index + 0];
 			u8 green     = pixel_data[pixel_index + 1];
 			u8 red       = pixel_data[pixel_index + 2];
-			// u8 padding   = pixel_data[pixel_index + 3];     // This will be the empty/unused byte
 
-            // printf("Pixel (%u,%u): B=%u, G=%u, R=%u\n", y, x, blue, green, red);
 			if(blue == 127 && green == 188 && red == 217)
 			{
-            	printf("Pixel (%u,%u): B=%u, G=%u, R=%u\n", y, x, blue, green, red);
+            	printf("Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u\n", y, x, blue, green, red);
 				count++;
 				if(count == 7)
 				{
-					x++;
-					if(x < header->width)
-					{
-						u32 pixel_index = (y * row_size) + (x * 4);
+					y++;
+					x +=7;
+					u32 pixel_index2 = (y * row_size) + (x * 4);
 
-						u8 blue      = pixel_data[pixel_index + 0];
-						u8 green     = pixel_data[pixel_index + 1];
-						u8 red       = pixel_data[pixel_index + 2];
-						printf("[Pixel (%u,%u): B=%u, G=%u, R=%u]\n", y, x, blue, green, red);
-						// return 0;
-
-					}
-					// u32 pixel_index2 = (y * row_size) + ((x + 1) * 4);
-
-					// u8 blue      = pixel_data[pixel_index2 + 0];
-					// u8 green     = pixel_data[pixel_index2 + 1];
-					// u8 red       = pixel_data[pixel_index2 + 2];
-					// printf("[Pixel (%u,%u): B=%u, G=%u, R=%u]\n", y, x + 1, blue, green, red);
+					u8 blue2      = pixel_data[pixel_index2 + 0];
+					u8 green2     = pixel_data[pixel_index2 + 1];
+					u8 red2       = pixel_data[pixel_index2 + 2];
+					printf("[Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u]\n", y, x, blue2, green2, red2);
 				}
 			}
 	    }
@@ -119,3 +109,7 @@ int main(int argc, char** argv)
 
 	return 0;
 }
+
+
+// 16	42
+// 396	cave

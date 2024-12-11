@@ -62,7 +62,7 @@ void	get_words(int y,int x,u8* pixel_data, u32 row_size,int len)
 	int chars = 0;
 	y -= 2;
 	x += 2;
-	printf("[%i %i]\n", y, x);
+	// printf("[%i %i]\n", y, x);
 
 	while (chars < len)
 	{
@@ -141,10 +141,10 @@ int main(int argc, char** argv)
 					u32 pixel_index2 = (y * row_size) + ((x + 7) * 4);
 
 					u8 blue2      = pixel_data[pixel_index2 + 0];
-					u8 green2     = pixel_data[pixel_index2 + 1];
+					// u8 green2     = pixel_data[pixel_index2 + 1];
 					u8 red2       = pixel_data[pixel_index2 + 2];
-					printf("[Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u]\n", y, x + 7, blue2, green2, red2);
-					printf("LEN: %i \n",blue2 + red2);
+					// printf("[Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u]\n", y, x + 7, blue2, green2, red2);
+					// printf("LEN: %i \n",blue2 + red2);
 					get_words(y,x,pixel_data, row_size,blue2 + red2 );
 				}
 			}

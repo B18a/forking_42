@@ -55,6 +55,51 @@ struct file_content   read_entire_file(char* filename)
 	return (struct file_content){file_data, file_size};
 }
 
+
+void	get_words(int y,int x,u8* pixel_data, u32 row_size,int len)
+{
+	int i = 0;
+	int chars = 0;
+	y -= 2;
+	x += 2;
+	printf("[%i %i]\n", y, x);
+
+	// int blocks = len / 3 + 1;
+
+
+
+
+	while (i < len)
+	{
+ 			u32 pixel_index = (y * row_size) + ((x + i) * 4);
+			u8 blue      = pixel_data[pixel_index + 0];
+			u8 green     = pixel_data[pixel_index + 1];
+			u8 red       = pixel_data[pixel_index + 2];	
+            // printf("Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u\n", y, (x+i), blue, green, red);
+			if (chars < len)
+			{
+            	chars++;
+				printf("%c", blue);
+			}
+			if (chars < len)
+			{
+            	chars++;
+				printf("%c", green);
+			}
+			if (chars < len)
+			{
+            	chars++;
+				printf("%c", red);
+			}
+		i++;	
+	}
+	// printf("\n");
+	
+
+}
+
+
+
 int main(int argc, char** argv)
 {
 	if (argc != 2)
@@ -95,21 +140,21 @@ int main(int argc, char** argv)
 				if(count == 7)
 				{
 					y++;
-					x +=7;
-					u32 pixel_index2 = (y * row_size) + (x * 4);
+					u32 pixel_index2 = (y * row_size) + ((x + 7) * 4);
 
 					u8 blue2      = pixel_data[pixel_index2 + 0];
 					u8 green2     = pixel_data[pixel_index2 + 1];
 					u8 red2       = pixel_data[pixel_index2 + 2];
-					printf("[Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u]\n", y, x, blue2, green2, red2);
+					printf("[Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u]\n", y, x + 7, blue2, green2, red2);
+					printf("LEN: %i \n",blue2 + red2);
+					get_words(y,x,pixel_data, row_size,blue2 + red2 );
 				}
 			}
 	    }
 	}
-
 	return 0;
 }
 
 
-// 16	42
-// 396	cave
+// 16	42		-	Yes you found me
+// 396	cave	-	Why did the scarec..........?

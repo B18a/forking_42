@@ -58,20 +58,15 @@ struct file_content   read_entire_file(char* filename)
 
 void	get_words(int y,int x,u8* pixel_data, u32 row_size,int len)
 {
-	int i = 0;
+	int j = 0;
 	int chars = 0;
 	y -= 2;
 	x += 2;
 	printf("[%i %i]\n", y, x);
 
-	// int blocks = len / 3 + 1;
-
-
-
-
-	while (i < len)
+	while (chars < len)
 	{
- 			u32 pixel_index = (y * row_size) + ((x + i) * 4);
+ 			u32 pixel_index = (y * row_size) + ((x + j) * 4);
 			u8 blue      = pixel_data[pixel_index + 0];
 			u8 green     = pixel_data[pixel_index + 1];
 			u8 red       = pixel_data[pixel_index + 2];	
@@ -91,11 +86,14 @@ void	get_words(int y,int x,u8* pixel_data, u32 row_size,int len)
             	chars++;
 				printf("%c", red);
 			}
-		i++;	
+		j++;
+		if(!(chars % 18))
+		{
+			j = 0;
+			y -= 1;
+			
+		}
 	}
-	// printf("\n");
-	
-
 }
 
 
@@ -135,7 +133,7 @@ int main(int argc, char** argv)
 
 			if(blue == 127 && green == 188 && red == 217)
 			{
-            	printf("Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u\n", y, x, blue, green, red);
+            	// printf("Pixel (Y:%u,X:%u): B=%u, G=%u, R=%u\n", y, x, blue, green, red);
 				count++;
 				if(count == 7)
 				{
